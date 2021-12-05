@@ -2,7 +2,8 @@ import csv
 import random
 
 if __name__ == '__main__':
-    fieldnames = ['Batch', 'Techniques', 'Workplace', 'Garage', 'Kitchen', 'Hall']
+    fieldnames = ['Current batch', 'Voltage in techniques', 'Voltage in workplace', 'Votage in garage',
+                  'Voltage in kitchen', 'Voltage in hall']
     with open('data/electricity.csv', 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -14,10 +15,11 @@ if __name__ == '__main__':
                 sign = 1 if random.random() > 0.5 else -1
 
                 if random.random() > 0.9:
-                    values[pos] = previous[pos] + sign * random.randint(1, 10)
+                    values[pos] = round(previous[pos] + sign * random.randint(1, 10), 3)
                 else:
-                    values[pos] = previous[pos] + sign * random.random()
+                    values[pos] = round(previous[pos] + sign * random.random(), 3)
 
             previous = values
-            writer.writerow({'Batch': f'{i}', 'Techniques': f'{values[0]}',  'Workplace': f'{values[1]}',
-                             'Garage': f'{values[2]}', 'Kitchen' : f'{values[3]}', 'Hall' : f'{values[4]}'})
+            writer.writerow({f'{fieldnames[0]}': f'{i}', f'{fieldnames[1]}': f'{values[0]}',
+                             f'{fieldnames[2]}': f'{values[1]}', f'{fieldnames[3]}': f'{values[2]}',
+                             f'{fieldnames[4]}': f'{values[3]}', f'{fieldnames[5]}': f'{values[4]}'})
